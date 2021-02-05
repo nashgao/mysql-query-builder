@@ -1,0 +1,10 @@
+{
+    "name": "nash/mysql-query-builder",
+    "authors": [
+        {
+            "name": "nashgao",
+            "email": "nashgao1992@gmail.com"
+        }
+    ],
+    "require": {}
+}
