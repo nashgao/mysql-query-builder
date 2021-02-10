@@ -1,10 +1,20 @@
 {
-    "name": "nash/mysql-query-builder",
+    "name": "nashgao/mysql-query-builder",
     "authors": [
         {
             "name": "nashgao",
             "email": "nashgao1992@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Nashgao\\MySQL\\QueryBuilder\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Nashgao\\Test\\": "./test"
+        }
+    }
 }
