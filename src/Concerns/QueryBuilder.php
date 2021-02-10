@@ -191,6 +191,12 @@ trait QueryBuilder
         );
     }
 
+
+    /**
+     * @param array $attribute
+     * @param array $values
+     * @return bool
+     */
     public function insertOnUpdate(array $attribute, array $values): bool
     {
         return $this->getModel()::query()->updateOrInsert($attribute, $values);
