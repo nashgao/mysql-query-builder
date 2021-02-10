@@ -1,5 +1,8 @@
 {
     "name": "nashgao/mysql-query-builder",
+    "type": "library",
+    "license": "MIT",
+    "description": "self used mysql encapsulation for hyperf framework",
     "authors": [
         {
             "name": "nashgao",
