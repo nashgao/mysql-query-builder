@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Nashgao\MySQL\QueryBuilder;
 
-
 use Hyperf\Database\Model\Builder;
 use Hyperf\Database\Model\Model;
 use Hyperf\DbConnection\Db;
@@ -48,8 +47,7 @@ class MySQLModel extends Model
     {
         if (!empty($this->geometry) && $this->geometryAsText === true) {
             $raw = '';
-            foreach ($this->geometry as $column)
-            {
+            foreach ($this->geometry as $column) {
                 $raw .= 'st_asText(`' . $this->table . '`.`' . $column . '`) as `' . $column . '`, ';
             }
             $raw = substr($raw, 0, -2);

@@ -15,8 +15,6 @@ declare(strict_types=1);
 
 namespace Nashgao\MySQL\QueryBuilder\Bean;
 
-
-
 abstract class SplBean extends \EasySwoole\Spl\SplBean implements SplBeanInterface
 {
     /**
@@ -32,8 +30,9 @@ abstract class SplBean extends \EasySwoole\Spl\SplBean implements SplBeanInterfa
                 $item = $item->toArray();
             }
         });
-        return array_filter($array,
-            function($item) {
+        return array_filter(
+            $array,
+            function ($item) {
                 return !is_null($item);
             }
         );

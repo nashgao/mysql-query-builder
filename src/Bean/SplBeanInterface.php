@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace Nashgao\MySQL\QueryBuilder\Bean;
 
-
 interface SplBeanInterface
 {
     public function issetPrimaryKey():bool;

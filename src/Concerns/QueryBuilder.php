@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Nashgao\MySQL\QueryBuilder\Concerns;
 
-
 use Hyperf\Database\Model\Model;
 use Nashgao\MySQL\QueryBuilder\Bean\SplBean;
 
@@ -146,9 +145,9 @@ trait QueryBuilder
     public function update(SplBean $bean): int
     {
         return $this->getModel()::query()
-            ->where($this->model->primaryKey,$bean->getPrimaryKey())
+            ->where($this->model->primaryKey, $bean->getPrimaryKey())
             ->limit(1)
-            ->update($this->getBeanWithoutPrimaryKey($bean)->toArray(null,$bean::FILTER_NOT_NULL));
+            ->update($this->getBeanWithoutPrimaryKey($bean)->toArray(null, $bean::FILTER_NOT_NULL));
     }
 
     /**
@@ -158,8 +157,8 @@ trait QueryBuilder
     public function batchUpdate(SplBean $bean): int
     {
         return $this->getModel()::query()
-            ->where($this->model->primaryKey,$bean->getPrimaryKey())
-            ->update($this->getBeanWithoutPrimaryKey($bean)->toArray(null,$bean::FILTER_NOT_NULL));
+            ->where($this->model->primaryKey, $bean->getPrimaryKey())
+            ->update($this->getBeanWithoutPrimaryKey($bean)->toArray(null, $bean::FILTER_NOT_NULL));
     }
 
 
@@ -184,11 +183,12 @@ trait QueryBuilder
                 /** @var SplBean|Entity|array $bean */
                 foreach ($beans as $bean) {
                     if ($bean instanceof SplBeanInterface) {
-                        $resultContainer[] = $bean->toArray(null,$bean::FILTER_NOT_NULL);
+                        $resultContainer[] = $bean->toArray(null, $bean::FILTER_NOT_NULL);
                     }
                 }
                 return $resultContainer;
-            })());
+            })()
+        );
     }
 
     public function insertOnUpdate(array $attribute, array $values): bool
@@ -219,7 +219,7 @@ trait QueryBuilder
             if (! $bean instanceof SplBeanInterface) {
                 continue;
             }
-            $resultContainer[] = $this->getModel()::query()->where($this->model->primaryKey,$bean->getPrimaryKey())->delete();
+            $resultContainer[] = $this->getModel()::query()->where($this->model->primaryKey, $bean->getPrimaryKey())->delete();
         }
         return $resultContainer;
     }
@@ -239,7 +239,7 @@ trait QueryBuilder
      */
     protected function getBeanWithoutPrimaryKey(SplBean $bean):SplBean
     {
-        return make(get_class($bean), [filterBean($bean,[$this->model->primaryKey])]);
+        return make(get_class($bean), [filterBean($bean, [$this->model->primaryKey])]);
     }
 
 
@@ -270,7 +270,7 @@ trait QueryBuilder
          * @return array
          */
         return function () use ($bean) {
-            return array_keys($bean->toArray(null,$bean::FILTER_NOT_NULL));
+            return array_keys($bean->toArray(null, $bean::FILTER_NOT_NULL));
         };
     }
 
@@ -283,6 +283,4 @@ trait QueryBuilder
     {
         return ! empty($resultFromDatabase) ? $resultFromDatabase[0] : null;
     }
-
-
 }

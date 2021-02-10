@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace Nashgao\MySQL\QueryBuilder\Concerns;
 
-
 use Nashgao\MySQL\QueryBuilder\MySQLModel as Model;
 use Nashgao\MySQL\QueryBuilder\Bean\MySQLBean;
 
@@ -42,13 +41,14 @@ trait CacheQueryBuilder
     {
         /** @var Model|null $result */
         $cacheResult = $this->getModel()::findFromCache($bean->getPrimaryKey());
-        if (! isset($result))
+        if (! isset($result)) {
             return [];
+        }
 
         $result = $cacheResult->toArray();
         $filter = filterBean($bean, [$this->model->primaryKey]);
         // make sure put the $result in front of the filter, other wise it would return wrong value
-        return empty( $filter ) ? $result : array_intersect_key($result, $filter);
+        return empty($filter) ? $result : array_intersect_key($result, $filter);
     }
 
 
@@ -61,12 +61,13 @@ trait CacheQueryBuilder
     {
         $result = $this->getModel()::findManyFromCache($ids);
 
-        if (! isset($result))
+        if (! isset($result)) {
             return [];
+        }
 
         $result = $result->toArray();
         return empty($filter) ? $result :
-            ( function () use ( $result, $filter ){
+            (function () use ($result, $filter) {
                 foreach ($result as &$item) {
                     $item = array_intersect_key($item, $filter);
                 }
