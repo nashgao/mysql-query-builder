@@ -12,8 +12,8 @@
 
 declare(strict_types=1);
 
-use Nashgao\MySQL\QueryBuilder\Bean\SplBean;
 
+use EasySwoole\Spl\SplBean;
 
 if (!function_exists('filterBean')) {
     /**

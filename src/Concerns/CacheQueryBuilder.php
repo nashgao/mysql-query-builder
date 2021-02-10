@@ -13,11 +13,11 @@
 declare(strict_types=1);
 
 
-namespace Nashgao\MySQL\QueryBuilder;
+namespace Nashgao\MySQL\QueryBuilder\Concerns;
 
 
-use Hyperf\Database\Model\Model;
-use Nashgao\MySQL\QueryBuilder\Bean\SplBean;
+use Nashgao\MySQL\QueryBuilder\MySQLModel as Model;
+use Nashgao\MySQL\QueryBuilder\Bean\MySQLBean;
 
 /**
  * @property Model $model
@@ -35,10 +35,10 @@ trait CacheQueryBuilder
     }
 
     /**
-     * @param SplBean $bean
+     * @param MySQLBean $bean
      * @return array
      */
-    public function getColumnFromCache(SplBean $bean)
+    public function getColumnFromCache(MySQLBean $bean)
     {
         /** @var Model|null $result */
         $cacheResult = $this->getModel()::findFromCache($bean->getPrimaryKey());

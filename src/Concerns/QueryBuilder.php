@@ -12,12 +12,11 @@
 
 declare(strict_types=1);
 
-namespace Nashgao\MySQL\QueryBuilder;
+namespace Nashgao\MySQL\QueryBuilder\Concerns;
 
 
 use Hyperf\Database\Model\Model;
 use Nashgao\MySQL\QueryBuilder\Bean\SplBean;
-use function DeepCopy\deep_copy;
 
 /**
  * @property Model $model
@@ -32,7 +31,7 @@ trait QueryBuilder
      */
     public function value(SplBean $bean)
     {
-        $query = $this->model::query();
+        $query = $this->getModel()::query();
         // check if the primary key exists
         if ($bean->issetPrimaryKey()) {
             $query = $query->where($this->model->primaryKey, $bean->getPrimaryKey());
@@ -49,7 +48,7 @@ trait QueryBuilder
      */
     public function pluck(SplBean $bean):array
     {
-        return $this->model::query()->pluck($this->getFirstKey($bean))->toArray();
+        return $this->getModel()::query()->pluck($this->getFirstKey($bean))->toArray();
     }
 
     /**
@@ -58,7 +57,7 @@ trait QueryBuilder
      */
     public function first():array
     {
-        return $this->model::query()->first()->toArray();
+        return $this->getModel()::query()->first()->toArray();
     }
 
     /**
@@ -68,7 +67,7 @@ trait QueryBuilder
      */
     public function get(SplBean $bean):?array
     {
-        $query = $this->model::query();
+        $query = $this->getModel()::query();
         if ($bean->issetPrimaryKey()) {
             $query = $query->where($this->model->primaryKey, $bean->getPrimaryKey());
         }
@@ -84,7 +83,7 @@ trait QueryBuilder
      */
     public function getMulti(SplBean $bean):?array
     {
-        $query = $this->model::query();
+        $query = $this->getModel()::query();
 
         if ($bean->issetPrimaryKey()) {
             $query = $query->where($this->model->primaryKey, $bean->getPrimaryKey());
@@ -101,7 +100,7 @@ trait QueryBuilder
     public function getFromMulti(array $beans):array
     {
         $emptyPrimaryKey = true;
-        $selectQuery = $this->model::query();
+        $selectQuery = $this->getModel()::query();
         /** @var SplBean $bean */
         foreach ($beans as $bean) {
             if ($bean->issetPrimaryKey()) {
@@ -285,12 +284,5 @@ trait QueryBuilder
         return ! empty($resultFromDatabase) ? $resultFromDatabase[0] : null;
     }
 
-    /**
-     * @return Model
-     */
-    public function getModel():Model
-    {
-        return deep_copy($this->model);
-    }
 
 }
