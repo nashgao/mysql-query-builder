@@ -1,0 +1,1 @@
+`composer require nashgao/mysql-query-builder`
