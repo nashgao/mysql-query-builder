@@ -15,6 +15,12 @@ class MySQLDao
     use QueryBuilder;
     use CacheQueryBuilder;
 
+    protected MySQLModel $model;
+
+    public function __construct(MySQLModel $model)
+    {
+        $this->model = $model;
+    }
 
     /**
      * @return Model
