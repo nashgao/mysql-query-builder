@@ -14,6 +14,8 @@ class MySQLModel extends Model
 {
     use Cacheable;
 
+    public $primaryKey;
+
     /**
      * The attributes that hold geometrical data.
      *
