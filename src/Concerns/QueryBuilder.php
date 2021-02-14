@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Nashgao\MySQL\QueryBuilder\Concerns;
 
 use Hyperf\Database\Model\Model;
+use Nashgao\MySQL\QueryBuilder\Bean\MySQLBean;
 use Nashgao\MySQL\QueryBuilder\Bean\SplBean;
 
 /**
@@ -126,32 +127,6 @@ trait QueryBuilder
         return $this->getModel()::find($primaryKey);
     }
 
-
-    /**
-     * update single field in mysql for the client
-     * @param SplBean $bean
-     * @return int
-     */
-    public function update(SplBean $bean): int
-    {
-        return $this->getModel()::query()
-            ->where($this->model->primaryKey, $bean->getPrimaryKey())
-            ->limit(1)
-            ->update($this->getBeanWithoutPrimaryKey($bean)->toArray(null, $bean::FILTER_NOT_NULL));
-    }
-
-    /**
-     * @param SplBean $bean
-     * @return int
-     */
-    public function batchUpdate(SplBean $bean): int
-    {
-        return $this->getModel()::query()
-            ->where($this->model->primaryKey, $bean->getPrimaryKey())
-            ->update($this->getBeanWithoutPrimaryKey($bean)->toArray(null, $bean::FILTER_NOT_NULL));
-    }
-
-
     /**
      * @param SplBean $bean
      * @return bool
@@ -181,15 +156,54 @@ trait QueryBuilder
         );
     }
 
-
     /**
-     * @param array $attribute
-     * @param array $values
+     * @param array $beans
      * @return bool
      */
-    public function insertOnUpdate(array $attribute, array $values): bool
+    public function safeBatchInsert(array $beans): bool
     {
-        return $this->getModel()::query()->updateOrInsert($attribute, $values);
+        $query = $this->getModel()::query();
+        /**
+         * @var MySQLBean $bean
+         */
+        foreach ($beans as $bean) {
+            $query->where($this->model->primaryKey, $bean->getPrimaryKey());
+        }
+
+        $existence = $query->get()->toArray();
+
+        $updatedContainer = [];
+        foreach ($beans as $bean) {
+            if (in_array($bean->getPrimaryKey(), $existence)) {
+                $updatedContainer[] = $bean;
+            }
+        }
+
+        return $this->batchInsert($updatedContainer);
+    }
+
+    /**
+     * update single field in mysql for the client
+     * @param SplBean $bean
+     * @return int
+     */
+    public function update(SplBean $bean): int
+    {
+        return $this->getModel()::query()
+            ->where($this->model->primaryKey, $bean->getPrimaryKey())
+            ->limit(1)
+            ->update($this->getBeanWithoutPrimaryKey($bean)->toArray(null, $bean::FILTER_NOT_NULL));
+    }
+
+    /**
+     * @param SplBean $bean
+     * @return int
+     */
+    public function batchUpdate(SplBean $bean): int
+    {
+        return $this->getModel()::query()
+            ->where($this->model->primaryKey, $bean->getPrimaryKey())
+            ->update($this->getBeanWithoutPrimaryKey($bean)->toArray(null, $bean::FILTER_NOT_NULL));
     }
 
 
