@@ -216,6 +216,14 @@ trait QueryBuilder
         return $this->getModel()::destroy($bean->getPrimaryKey());
     }
 
+    /**
+     * @param SplBean $bean
+     * @return bool
+     */
+    public function exists(SplBean $bean): bool
+    {
+        return $this->getModel()::query()->where($this->model->primaryKey, $bean->getPrimaryKey())->exists();
+    }
 
     /**
      * @param array $beans
