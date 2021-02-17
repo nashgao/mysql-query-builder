@@ -294,11 +294,30 @@ trait QueryBuilder
 
 
     /**
-     * @param array $resultFromDatabase
+     * @param array $result
      * @return array|null
      */
-    protected function filterSingleResultByGet(array $resultFromDatabase):?array
+    protected function filterSingleResultByGet(array $result):?array
     {
-        return ! empty($resultFromDatabase) ? $resultFromDatabase[0] : null;
+        return ! empty($result) ? $result[0] : null;
+    }
+
+    /**
+     * @param array $result
+     * @param string|null $column
+     * @return mixed|null
+     */
+    protected function filterSingleColumnResultByGet(array $result, string $column = null)
+    {
+        $result = $this->filterSingleResultByGet($result);
+        if (! isset($result) or empty($result)) {
+            return $result;
+        }
+
+        if (array_key_exists($column, $result)) {
+            return $result[$column];
+        }
+
+        return null;
     }
 }
