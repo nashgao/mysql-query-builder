@@ -311,7 +311,7 @@ trait QueryBuilder
     {
         $result = $this->filterSingleResultByGet($result);
         if (! isset($result) or empty($result)) {
-            return $result;
+            return null;
         }
 
         if (array_key_exists($column, $result)) {
