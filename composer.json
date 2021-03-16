@@ -13,7 +13,7 @@
         "hyperf/database": "~2.1.0",
         "hyperf/model-cache": "~2.1.0",
         "myclabs/deep-copy": "^1.10",
-        "easyswoole/spl": "~1.3"
+        "nashgao/utils": "~0.1"
     },
     "require-dev": {
         "hyperf/testing": "~2.1.0",

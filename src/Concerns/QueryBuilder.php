@@ -6,7 +6,6 @@ namespace Nashgao\MySQL\QueryBuilder\Concerns;
 
 use Hyperf\Database\Model\Model;
 use Nashgao\MySQL\QueryBuilder\Bean\MySQLBean;
-use Nashgao\MySQL\QueryBuilder\Bean\SplBean;
 
 /**
  * @property Model $model
@@ -16,10 +15,10 @@ trait QueryBuilder
     /**
      * Get one value from the table, supports get specific column based on primary key
      * Normally it just returns a string or int
-     * @param SplBean $bean
+     * @param MySQLBean $bean
      * @return mixed
      */
-    public function value(SplBean $bean)
+    public function value(MySQLBean $bean)
     {
         $query = $this->getModel()::query();
         // check if the primary key exists
@@ -33,10 +32,10 @@ trait QueryBuilder
     /**
      * Select specific column
      * It returns a set of values with numeric key in the array
-     * @param SplBean $bean
+     * @param MySQLBean $bean
      * @return array
      */
-    public function pluck(SplBean $bean):array
+    public function pluck(MySQLBean $bean):array
     {
         return $this->getModel()::query()->pluck($this->getFirstKey($bean))->toArray();
     }
@@ -52,10 +51,10 @@ trait QueryBuilder
 
     /**
      * Select the result from a specific column (supports select on primary key), equivalent to 'select column where primary key = value '
-     * @param SplBean $bean
+     * @param MySQLBean $bean
      * @return array|null
      */
-    public function get(SplBean $bean):?array
+    public function get(MySQLBean $bean):?array
     {
         $query = $this->getModel()::query();
         if ($bean->issetPrimaryKey()) {
@@ -68,10 +67,10 @@ trait QueryBuilder
 
     /**
      * Get the result of multiple columns based on the primary key
-     * @param SplBean $bean
+     * @param MySQLBean $bean
      * @return array|null
      */
-    public function getMulti(SplBean $bean):?array
+    public function getMulti(MySQLBean $bean):?array
     {
         $query = $this->getModel()::query();
 
@@ -91,7 +90,7 @@ trait QueryBuilder
     {
         $emptyPrimaryKey = true;
         $selectQuery = $this->getModel()::query();
-        /** @var SplBean $bean */
+        /** @var MySQLBean $bean */
         foreach ($beans as $bean) {
             if ($bean->issetPrimaryKey()) {
                 $selectQuery->orWhere($this->model->primaryKey, $bean->getPrimaryKey());
@@ -128,10 +127,10 @@ trait QueryBuilder
     }
 
     /**
-     * @param SplBean $bean
+     * @param MySQLBean $bean
      * @return bool
      */
-    public function insert(SplBean $bean):bool
+    public function insert(MySQLBean $bean):bool
     {
         return $this->getModel()::query()->insert($bean->toArray());
     }
@@ -145,9 +144,9 @@ trait QueryBuilder
         return $this->getModel()::query()->insert(
             (function () use ($beans) {
                 $resultContainer = [];
-                /** @var SplBean|Entity|array $bean */
+                /** @var MySQLBean|array $bean */
                 foreach ($beans as $bean) {
-                    if ($bean instanceof SplBeanInterface) {
+                    if ($bean instanceof MySQLBean) {
                         $resultContainer[] = $bean->toArray(null, $bean::FILTER_NOT_NULL);
                     }
                 }
@@ -184,10 +183,10 @@ trait QueryBuilder
 
     /**
      * update single field in mysql for the client
-     * @param SplBean $bean
+     * @param MySQLBean $bean
      * @return int
      */
-    public function update(SplBean $bean): int
+    public function update(MySQLBean $bean): int
     {
         return $this->getModel()::query()
             ->where($this->model->primaryKey, $bean->getPrimaryKey())
@@ -196,10 +195,10 @@ trait QueryBuilder
     }
 
     /**
-     * @param SplBean $bean
+     * @param MySQLBean $bean
      * @return int
      */
-    public function batchUpdate(SplBean $bean): int
+    public function batchUpdate(MySQLBean $bean): int
     {
         return $this->getModel()::query()
             ->where($this->model->primaryKey, $bean->getPrimaryKey())
@@ -208,19 +207,19 @@ trait QueryBuilder
 
 
     /**
-     * @param SplBean $bean
+     * @param MySQLBean $bean
      * @return int
      */
-    public function delete(SplBean $bean):int
+    public function delete(MySQLBean $bean):int
     {
         return $this->getModel()::destroy($bean->getPrimaryKey());
     }
 
     /**
-     * @param SplBean $bean
+     * @param MySQLBean $bean
      * @return bool
      */
-    public function exists(SplBean $bean): bool
+    public function exists(MySQLBean $bean): bool
     {
         return $this->getModel()::query()->where($this->model->primaryKey, $bean->getPrimaryKey())->exists();
     }
@@ -232,9 +231,9 @@ trait QueryBuilder
     public function batchDelete(array $beans):array
     {
         $resultContainer = [];
-        /** @var SplBean $bean */
+        /** @var MySQLBean $bean */
         foreach ($beans as $bean) {
-            if (! $bean instanceof SplBeanInterface) {
+            if (! $bean instanceof MySQLBean) {
                 continue;
             }
             $resultContainer[] = $this->getModel()::query()->where($this->model->primaryKey, $bean->getPrimaryKey())->delete();
@@ -243,29 +242,29 @@ trait QueryBuilder
     }
 
     /**
-     * @param SplBean $bean
+     * @param MySQLBean $bean
      * @return array
      */
-    protected function getArrayWithoutPrimaryKey(SplBean $bean):array
+    protected function getArrayWithoutPrimaryKey(MySQLBean $bean):array
     {
         return filterBean($bean, [$this->model->primaryKey]);
     }
 
     /**
-     * @param SplBean $bean
-     * @return SplBean
+     * @param MySQLBean $bean
+     * @return MySQLBean
      */
-    protected function getBeanWithoutPrimaryKey(SplBean $bean):SplBean
+    protected function getBeanWithoutPrimaryKey(MySQLBean $bean):MySQLBean
     {
         return make(get_class($bean), [filterBean($bean, [$this->model->primaryKey])]);
     }
 
 
     /**
-     * @param SplBean $bean
+     * @param MySQLBean $bean
      * @return string
      */
-    protected function getFirstKey(SplBean $bean):string
+    protected function getFirstKey(MySQLBean $bean):string
     {
         $keys = $this->getValidKeys($bean)();
         foreach ($keys as $key => $value) {
@@ -279,10 +278,10 @@ trait QueryBuilder
 
 
     /**
-     * @param SplBean $bean
+     * @param MySQLBean $bean
      * @return \Closure
      */
-    protected function getValidKeys(SplBean $bean):\Closure
+    protected function getValidKeys(MySQLBean $bean):\Closure
     {
         /**
          * @return array
