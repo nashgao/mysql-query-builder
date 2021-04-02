@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Nashgao\MySQL\QueryBuilder\Concerns;
 
+use Hyperf\Contract\LengthAwarePaginatorInterface;
 use Hyperf\Database\Model\Model;
 use Nashgao\MySQL\QueryBuilder\Bean\MySQLBean;
 
@@ -115,6 +116,15 @@ trait QueryBuilder
     public function getAll(): array
     {
         return $this->getModel()::query()->get()->toArray();
+    }
+
+    /**
+     * @param int $paginate
+     * @return LengthAwarePaginatorInterface
+     */
+    public function paginate(int $paginate = 10): LengthAwarePaginatorInterface
+    {
+        return $this->getModel()::query()->paginate($paginate);
     }
 
     /**

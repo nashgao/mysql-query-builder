@@ -11,6 +11,7 @@
     ],
     "require": {
         "hyperf/database": "~2.1.0",
+        "hyperf/paginator": "~2.1.0",
         "hyperf/model-cache": "~2.1.0",
         "myclabs/deep-copy": "^1.10",
         "nashgao/utils": "~0.1"
