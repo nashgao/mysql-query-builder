@@ -118,6 +118,11 @@ trait QueryBuilder
         return $this->getModel()::query()->get()->toArray();
     }
 
+    public function fieldExists(string $field, $value): bool
+    {
+        return $this->getModel()::query()->where($field, $value)->exists();
+    }
+
     /**
      * @param int $paginate
      * @return LengthAwarePaginatorInterface
