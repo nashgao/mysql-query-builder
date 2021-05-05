@@ -16,9 +16,6 @@
         "myclabs/deep-copy": "^1.10",
         "nashgao/utils": "~0.1"
     },
-    "suggest": {
-        "brick/geo": "^0.6.1"
-    },
     "require-dev": {
         "hyperf/testing": "~2.1.0",
         "swoole/ide-helper": "~4.6",
