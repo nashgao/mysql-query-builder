@@ -20,6 +20,15 @@
         "nashgao/hyperf-mysql-spatial": "~0.1"
     },
     "require-dev": {
+        "hyperf/di": "~2.1.0",
+        "hyperf/contract": "~2.1.0",
+        "hyperf/command": "~2.1.0",
+        "hyperf/config": "~2.1.0",
+        "hyperf/framework": "~2.1.0",
+        "hyperf/dispatcher": "~2.1.0",
+        "hyperf/server": "~2.1.0",
+        "hyperf/logger": "~2.1.0",
+        "hyperf/exception-handler": "~2.1.0",
         "hyperf/testing": "~2.1.0",
         "swoole/ide-helper": "~4.6",
         "friendsofphp/php-cs-fixer": "^2.14",
