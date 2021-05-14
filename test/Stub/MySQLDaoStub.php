@@ -16,9 +16,25 @@ abstract class MySQLDaoStub
 
     protected static MySQLModel $model;
 
-    abstract static function initBean();
+    abstract public static function initBean();
 
-    abstract static function initModel();
+    abstract public static function initModel();
+
+    /**
+     * @return MySQLBean
+     */
+    public static function getBean(): MySQLBean
+    {
+        return static::$bean;
+    }
+
+    /**
+     * @return MySQLModel
+     */
+    public static function getModel(): MySQLModel
+    {
+        return static::$model;
+    }
 
     /**
      * @return LegacyMockInterface|MockInterface|MySQLDao
@@ -54,17 +70,17 @@ abstract class MySQLDaoStub
             ->andReturn(static::$bean->toArray());
 
         $dao->shouldReceive('get')
-            ->andReturn(null, static::$bean->toArray());
+            ->andReturn(static::$bean->toArray(),null);
 
         $dao->shouldReceive('getMulti')
             ->with(\Mockery::type(MySQLBean::class))
-            ->andReturn(null, static::$bean->toArray());
+            ->andReturn(static::$bean->toArray(),null);
 
         $dao->shouldReceive('getAll')
             ->andReturn([static::$bean->toArray()]);
 
         $dao->shouldReceive('fieldExists')
-            ->with(\Mockery::type('string'),\Mockery::any())
+            ->with(\Mockery::type('string'), \Mockery::any())
             ->andReturn(true);
 
         $dao->shouldReceive('find')
@@ -73,7 +89,7 @@ abstract class MySQLDaoStub
 
         $dao->shouldReceive('getFromCache')
             ->with(\Mockery::any())
-            ->andReturn(null, static::$model);
+            ->andReturn(static::$model,null);
 
         // add cache query
         $dao->shouldReceive('getColumnFromCache')

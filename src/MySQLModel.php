@@ -13,5 +13,4 @@ class MySQLModel extends Model
     use Cacheable;
 
     public $primaryKey;
-
 }
