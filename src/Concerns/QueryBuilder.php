@@ -10,6 +10,7 @@ use Nashgao\MySQL\QueryBuilder\Bean\MySQLBean;
 
 /**
  * @property Model $model
+ * @method Model getModel()
  */
 trait QueryBuilder
 {
