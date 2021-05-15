@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nashgao\Test\Stub;
+namespace Nashgao\MySQL\QueryBuilder\Test\Stub;
 
 use Mockery\LegacyMockInterface;
 use Mockery\MockInterface;
