@@ -37,7 +37,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Nashgao\\MySQL\\QueryBuilder\\": "src"
+            "Nashgao\\MySQL\\QueryBuilder\\": "./src"
         }
     },
     "autoload-dev": {

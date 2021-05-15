@@ -23,7 +23,6 @@ class MySQLDaoStubTest extends TestCase
             public static function initModel()
             {
                 static::$model = new class extends MySQLModel {
-
                 };
             }
         };

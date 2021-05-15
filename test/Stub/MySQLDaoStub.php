@@ -70,11 +70,11 @@ abstract class MySQLDaoStub
             ->andReturn(static::$bean->toArray());
 
         $dao->shouldReceive('get')
-            ->andReturn(static::$bean->toArray(),null);
+            ->andReturn(static::$bean->toArray(), null);
 
         $dao->shouldReceive('getMulti')
             ->with(\Mockery::type(MySQLBean::class))
-            ->andReturn(static::$bean->toArray(),null);
+            ->andReturn(static::$bean->toArray(), null);
 
         $dao->shouldReceive('getAll')
             ->andReturn([static::$bean->toArray()]);
@@ -89,7 +89,7 @@ abstract class MySQLDaoStub
 
         $dao->shouldReceive('getFromCache')
             ->with(\Mockery::any())
-            ->andReturn(static::$model,null);
+            ->andReturn(static::$model, null);
 
         // add cache query
         $dao->shouldReceive('getColumnFromCache')
