@@ -14,7 +14,7 @@
         "hyperf/paginator": "~2.1.0",
         "hyperf/model-cache": "~2.1.0",
         "myclabs/deep-copy": "^1.10",
-        "nashgao/utils": "~0.1"
+        "nashgao/utils": "dev-master"
     },
     "suggest": {
         "nashgao/hyperf-mysql-spatial": "~0.1"
