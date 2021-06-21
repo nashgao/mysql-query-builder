@@ -14,16 +14,10 @@
         "hyperf/utils": "2.2.*",
         "hyperf/model-cache": "2.2.*",
         "myclabs/deep-copy": "^1.10",
-        "nashgao/utils": "dev-master",
-        "hyperf/db-connection": "2.2.*",
-        "hyperf/paginator": "2.2.*",
-        "hyperf/snowflake": "2.2.*",
-        "hyperf/event": "2.2.*",
-        "hyperf/model-listener": "2.2.*",
-        "hyperf/pool": "2.2.*"
+        "nashgao/utils": "dev-master"
     },
     "suggest": {
-        "nashgao/hyperf-mysql-spatial": "~0.1"
+        "nashgao/hyperf-mysql-spatial": "dev-master"
     },
     "require-dev": {
         "hyperf/di": "2.2.*",
