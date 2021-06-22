@@ -37,9 +37,9 @@ abstract class MySQLDaoStub
     }
 
     /**
-     * @return LegacyMockInterface|MockInterface|MySQLDao
+     * @return MySQLDaoStub|MockInterface|LegacyMockInterface|MySQLDao
      */
-    public static function createMySQLDaoStub()
+    public static function createMySQLDaoStub(): MySQLDaoStub|MockInterface|LegacyMockInterface|MySQLDao
     {
         $dao = \Mockery::mock(MySQLDao::class);
         return static::addCommonMethod($dao);
@@ -48,7 +48,7 @@ abstract class MySQLDaoStub
     /**
      * @param MockInterface|LegacyMockInterface|MySQLDaoStub $dao
      */
-    public static function addCommonMethod($dao)
+    public static function addCommonMethod(MockInterface|LegacyMockInterface|MySQLDaoStub $dao): MySQLDaoStub|MockInterface|LegacyMockInterface
     {
         if (! isset(static::$bean)) {
             static::initBean();

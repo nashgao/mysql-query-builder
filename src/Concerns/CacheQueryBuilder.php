@@ -18,7 +18,7 @@ trait CacheQueryBuilder
      * @param $primaryKey
      * @return Model|null
      */
-    public function getFromCache($primaryKey): ?Model
+    public function getFromCache($primaryKey):? static
     {
         return $this->getModel()::findFromCache($primaryKey);
     }
@@ -27,7 +27,7 @@ trait CacheQueryBuilder
      * @param MySQLBean $bean
      * @return array
      */
-    public function getColumnFromCache(MySQLBean $bean)
+    public function getColumnFromCache(MySQLBean $bean): array
     {
         /** @var Model|null $result */
         $cacheResult = $this->getModel()::findFromCache($bean->getPrimaryKey());

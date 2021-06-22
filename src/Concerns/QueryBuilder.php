@@ -6,6 +6,7 @@ namespace Nashgao\MySQL\QueryBuilder\Concerns;
 
 use Hyperf\Contract\LengthAwarePaginatorInterface;
 use Hyperf\Database\Model\Model;
+use JetBrains\PhpStorm\Pure;
 use Nashgao\MySQL\QueryBuilder\Bean\MySQLBean;
 
 /**
@@ -20,7 +21,7 @@ trait QueryBuilder
      * @param MySQLBean $bean
      * @return mixed
      */
-    public function value(MySQLBean $bean)
+    public function value(MySQLBean $bean): mixed
     {
         $query = $this->getModel()::query();
         // check if the primary key exists
@@ -137,7 +138,7 @@ trait QueryBuilder
      * @param $primaryKey
      * @return Model|null
      */
-    public function find($primaryKey):?Model
+    public function find($primaryKey):?static
     {
         return $this->getModel()::find($primaryKey);
     }
@@ -320,9 +321,10 @@ trait QueryBuilder
     /**
      * @param array $result
      * @param string|null $column
-     * @return mixed|null
+     * @return mixed
      */
-    protected function filterSingleColumnResultByGet(array $result, string $column = null)
+    #[Pure]
+    protected function filterSingleColumnResultByGet(array $result, string $column = null): mixed
     {
         $result = $this->filterSingleResultByGet($result);
         if (! isset($result) or empty($result)) {
