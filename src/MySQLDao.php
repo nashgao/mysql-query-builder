@@ -23,9 +23,9 @@ class MySQLDao
     }
 
     /**
-     * @return static
+     * @return MySQLModel
      */
-    public function getModel(): static
+    public function getModel(): MySQLModel
     {
         return deep_copy($this->model);
     }
