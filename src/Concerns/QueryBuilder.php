@@ -8,6 +8,7 @@ use Hyperf\Contract\LengthAwarePaginatorInterface;
 use Hyperf\Database\Model\Model;
 use JetBrains\PhpStorm\Pure;
 use Nashgao\MySQL\QueryBuilder\Bean\MySQLBean;
+use Nashgao\MySQL\QueryBuilder\MySQLModel;
 
 /**
  * @property Model $model
@@ -138,7 +139,7 @@ trait QueryBuilder
      * @param $primaryKey
      * @return Model|null
      */
-    public function find($primaryKey):?static
+    public function find($primaryKey):?MySQLModel
     {
         return $this->getModel()::find($primaryKey);
     }

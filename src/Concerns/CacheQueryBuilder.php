@@ -5,6 +5,7 @@ declare(strict_types=1);
 
 namespace Nashgao\MySQL\QueryBuilder\Concerns;
 
+use Nashgao\MySQL\QueryBuilder\MySQLModel;
 use Nashgao\MySQL\QueryBuilder\MySQLModel as Model;
 use Nashgao\MySQL\QueryBuilder\Bean\MySQLBean;
 
@@ -18,7 +19,7 @@ trait CacheQueryBuilder
      * @param $primaryKey
      * @return Model|null
      */
-    public function getFromCache($primaryKey):? static
+    public function getFromCache($primaryKey):? MySQLModel
     {
         return $this->getModel()::findFromCache($primaryKey);
     }
